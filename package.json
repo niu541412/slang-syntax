@@ -6,6 +6,8 @@
   "engines": {
     "vscode": "^1.60.0"
   },
+	"publisher": "niu541412",
+	"license": "MIT",
   "categories": [
     "Programming Languages"
   ],
@@ -13,13 +15,20 @@
     "languages": [{
       "id": "slang",
       "aliases": ["S-Lang", "slang"],
-      "extensions": [".sl"],
-      "configuration": "./language-configuration.json"
+      "extensions": [".sl", ".slshrc", ".isisrc"],
+      "configuration": "./language-configuration.json",
+      "firstLine": "^#!/.*\\b[(slsh)(isis)]*\\b"
     }],
     "grammars": [{
       "language": "slang",
       "scopeName": "source.slang",
       "path": "./syntaxes/slang.tmLanguage.json"
     }]
+  },
+  "icon": "images/slang_logo.png",
+  "galleryBanner.color": "#0F69C9",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/niu541412/slang-syntax.git"
   }
 }

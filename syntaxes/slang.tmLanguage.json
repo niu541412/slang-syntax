@@ -13,7 +13,7 @@
 		"keywords": {
 			"patterns": [{
 				"name": "keyword.control.slang",
-				"match": "\\b(if|while|for|return)\\b"
+				"match": "\\b(if|while|for|foreach|loop|ifnot|forever|loop|return)\\b"
 			}]
 		},
 		"strings": {
