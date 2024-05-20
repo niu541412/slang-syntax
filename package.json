@@ -1,0 +1,25 @@
+{
+  "name": "s-lang-syntax",
+  "displayName": "S-Lang syntax",
+  "description": "VScode Syntax Highlighting Bundle for S-Lang",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.60.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [{
+      "id": "slang",
+      "aliases": ["S-Lang", "slang"],
+      "extensions": [".sl"],
+      "configuration": "./language-configuration.json"
+    }],
+    "grammars": [{
+      "language": "slang",
+      "scopeName": "source.slang",
+      "path": "./syntaxes/slang.tmLanguage.json"
+    }]
+  }
+}
