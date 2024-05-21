@@ -37,7 +37,6 @@
 	},
     "onEnterRules": [
 		{   
-            // copy from C syntax
 			// Decrease indentation after single line if/else if/else, for, or while
 			"previousLineText": "^\\s*(((else ?)?if|for|while|ifnot|foreach|forever|loop)\\s*\\(.*\\)\\s*|else\\s*)$",
 			// But make sure line doesn't have braces or is not another if statement

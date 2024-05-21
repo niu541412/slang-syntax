@@ -19,6 +19,9 @@
 		},
 		{
 			"include": "#strings"
+		},
+		{
+			"include": "#raw_strings"
 		}
 	],
 	"repository": {
@@ -47,11 +50,11 @@
 			"patterns": [
 				{
 					"name": "keyword.control.slang",
-					"match": "\\b(if|while|for|foreach|loop|ifnot|forever|loop|return)\\b"
+					"match": "\\b(break|case|catch|continue|define|do|else|finally|_for|for|foreach|forever|if|ifnot|loop|return|switch|then|throw|try|typedef|using|while)\\b"
 				},
 				{
 					"name": "keyword.operator.slang",
-					"match": "%|\\*|/|-|\\+|--|\\+\\+|\\^"
+					"match": "%|\\*|/|-|\\+|--|\\+\\+|\\^|mod"
 				},
 				{
 					"name": "keyword.operator.bitwise.slang",
@@ -82,9 +85,18 @@
 			"patterns": [
 				{
 					"name": "constant.character.escape.slang",
+					"match": "\\\\(\\\\|[aefnrtv'\"]|[0-3]\\d{,2}|[4-7]\\d?|x[a-fA-F0-9]{,2}|u[a-fA-F0-9]{,4}|d[0-2]\\d{,2}|d[3-9]\\d?)"
+				},
+				{
+					"name": "invalid.illegal.unknown-escape.slang",
 					"match": "\\\\."
 				}
 			]
+		},
+		"raw_strings": {
+			"name": "string.quoted.backtick.slang",
+			"begin": "`",
+			"end": "`"
 		},
 		"comment": {
 			"patterns": [
