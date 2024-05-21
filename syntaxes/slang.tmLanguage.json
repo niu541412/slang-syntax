@@ -3,18 +3,77 @@
 	"name": "S-Lang",
 	"patterns": [
 		{
+			"include": "#comment"
+		},
+		{
+			"include": "#delimiters"
+		},
+		{
 			"include": "#keywords"
+		},
+		{
+			"include": "#shebang"
+		},
+		{
+			"include": "#storage_types"
 		},
 		{
 			"include": "#strings"
 		}
 	],
 	"repository": {
+		"delimiters": {
+			"patterns": [
+				{
+					"match": "\\,|:",
+					"name": "punctuation.other.slang"
+				}
+			]
+		},
+		"shebang": {
+			"name": "comment.line.shebang.slang",
+			"match": "\\A(#!).*(?=$)",
+			"captures": {
+				"1": {
+					"name": "punctuation.definition.comment.slang"
+				}
+			}
+		},
+		"storage_types": {
+			"name": "storage.type.slang",
+			"match": "\\b(Char|UChar|Short|Ushort|UShort|Integer|UInteger|Long|ULong|LLong|ULLong|Float|Double|Complex|String|BString|Struct|Ref|Null|Array|Assoc|List|DataType)_Type\\b"
+		},
 		"keywords": {
-			"patterns": [{
-				"name": "keyword.control.slang",
-				"match": "\\b(if|while|for|foreach|loop|ifnot|forever|loop|return)\\b"
-			}]
+			"patterns": [
+				{
+					"name": "keyword.control.slang",
+					"match": "\\b(if|while|for|foreach|loop|ifnot|forever|loop|return)\\b"
+				},
+				{
+					"name": "keyword.operator.slang",
+					"match": "%|\\*|/|-|\\+|--|\\+\\+|\\^"
+				},
+				{
+					"name": "keyword.operator.bitwise.slang",
+					"match": "&|\\||~|shr|sht|xor"
+				},
+				{
+					"name": "keyword.operator.logical.slang",
+					"match": "&&|\\|\\||and|or|not"
+				},
+				{
+					"name": "keyword.operator.assignment.slang",
+					"match": "="
+				},
+				{
+					"name": "keyword.operator.comparison.slang",
+					"match": "!=|<=|>=|==|<|>"
+				},
+				{
+					"name": "keyword.operator.assignment.compound.slang",
+					"match": "\\+=|-=|\\*=|/=|&=|\\|="
+				}
+			]
 		},
 		"strings": {
 			"name": "string.quoted.double.slang",
@@ -26,6 +85,44 @@
 					"match": "\\\\."
 				}
 			]
+		},
+		"comment": {
+			"patterns": [
+				{
+					"include": "#block_comment"
+				},
+				{
+					"include": "#line_comment"
+				}
+			]
+		},
+		"line_comment": {
+			"patterns": [
+				{
+					"name": "comment.line.percentage.slang",
+					"match": "(%).*$\\n?",
+					"captures": {
+						"1": {
+							"name": "punctuation.definition.comment.slang"
+						}
+					}
+				}
+			]
+		},
+		"block_comment": {
+			"begin": "\\s*+(#<TAG>*)",
+			"end": "#<\\/TAG>",
+			"beginCaptures": {
+				"1": {
+					"name": "punctuation.definition.comment.begin.slang"
+				}
+			},
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.comment.end.slang"
+				}
+			},
+			"name": "comment.block.slang"
 		}
 	},
 	"scopeName": "source.slang"
