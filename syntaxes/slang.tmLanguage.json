@@ -6,6 +6,9 @@
 			"include": "#comment"
 		},
 		{
+			"include": "#import"
+		},
+		{
 			"include": "#delimiters"
 		},
 		{
@@ -49,12 +52,16 @@
 		"keywords": {
 			"patterns": [
 				{
+					"name": "keyword.operator.sizeof.slang",
+					"match": "(?<![\\w$])(sizeof)(?![\\w$])"
+				},
+				{
 					"name": "keyword.control.slang",
-					"match": "\\b(break|case|catch|continue|define|do|else|finally|_for|for|foreach|forever|if|ifnot|loop|return|switch|then|throw|try|typedef|using|while)\\b"
+					"match": "\\b(break|case|catch|continue|do|else|finally|_for|for|foreach|forever|if|ifnot|loop|return|switch|then|throw|try|using|while)\\b"
 				},
 				{
 					"name": "keyword.operator.slang",
-					"match": "%|\\*|/|-|\\+|--|\\+\\+|\\^|mod"
+					"match": "%|\\*|/|-|\\+|--|\\+\\+|\\^|mod|@"
 				},
 				{
 					"name": "keyword.operator.bitwise.slang",
@@ -75,8 +82,39 @@
 				{
 					"name": "keyword.operator.assignment.compound.slang",
 					"match": "\\+=|-=|\\*=|/=|&=|\\|="
+				},
+				{
+					"name": "storage.type.slang",
+					"match": "\\b(variable|struct)\\b"
+				},
+				{
+					"match": "\\b(?:(NULL)|(PI)|(ssss))\\b",
+					"captures": {
+						"1": {
+							"name": "support.constant.slan"
+						},
+						"2": {
+							"name": "constant.numeric.slang"
+						}
+					}
+				},
+				{
+					"name": "support.type.slang",
+					"match": "\\b(typedef|define|static|public|private)\\b"
+				},
+				{
+					"name": "support.type.exception.slang",
+					"match": "\\b(Any|OS|Malloc|Import|Parse|Syntax|DuplicateDefinition|UndefinedName|RunTime|InvalidParm|TypeMismatch|UserBreak|Stack|StackOverflow|StackUnderflow|ReadOnly|VariableUnitialized|NumArgs|Index|Usage|Application|Internal|NotImplemented|LimitExceeded|Math|DivideByZero|ArithOverflow|ArithUnderflow|Domain|IO|Write|Read|Open|Data|Unicode|InvalidUTF8|UnknownError)Error\\b"
 				}
 			]
+		},
+		"import": {
+			"match": "\\b(import|autoload|require|eval_file)\\s*\\(",
+			"captures": {
+				"1": {
+					"name": "support.function.module.slang"
+				}
+			}
 		},
 		"strings": {
 			"name": "string.quoted.double.slang",
@@ -122,8 +160,8 @@
 			]
 		},
 		"block_comment": {
-			"begin": "\\s*+(#<TAG>*)",
-			"end": "#<\\/TAG>",
+			"begin": "\\s*+(#<([^\\s<>]+)>)",
+			"end": "#<\\/\\2()>",
 			"beginCaptures": {
 				"1": {
 					"name": "punctuation.definition.comment.begin.slang"
@@ -134,7 +172,7 @@
 					"name": "punctuation.definition.comment.end.slang"
 				}
 			},
-			"name": "comment.block.slang"
+			"name": "comment.block.tags.slang"
 		}
 	},
 	"scopeName": "source.slang"
