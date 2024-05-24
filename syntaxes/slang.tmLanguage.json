@@ -3,7 +3,25 @@
 	"name": "S-Lang",
 	"patterns": [
 		{
+			"include": "#shebang"
+		},
+		{
+			"include": "#terminator"
+		},
+		{
 			"include": "#comment"
+		},
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#strings"
+		},
+		{
+			"include": "#raw_strings"
+		},
+		{
+			"include": "#block"
 		},
 		{
 			"include": "#import"
@@ -12,30 +30,10 @@
 			"include": "#delimiters"
 		},
 		{
-			"include": "#keywords"
-		},
-		{
-			"include": "#shebang"
-		},
-		{
 			"include": "#storage_types"
-		},
-		{
-			"include": "#strings"
-		},
-		{
-			"include": "#raw_strings"
 		}
 	],
 	"repository": {
-		"delimiters": {
-			"patterns": [
-				{
-					"match": "\\,|:",
-					"name": "punctuation.other.slang"
-				}
-			]
-		},
 		"shebang": {
 			"name": "comment.line.shebang.slang",
 			"match": "\\A(#!).*(?=$)",
@@ -45,9 +43,346 @@
 				}
 			}
 		},
+		"terminator": {
+			"match": ";",
+			"name": "punctuation.terminator.statement.slang"
+		},
+		"member_access": {
+			"match": "((?:[a-zA-Z_]\\w*|(?<=\\]|\\)))\\s*)(?:(\\.)|(->))((?:[a-zA-Z_]\\w*\\s*(?:(?:\\.)|(?:->))\\s*)*)\\s*(\\b(?!(?:void|char|bool|int)\\b)[a-zA-Z_]\\w*\\b(?!\\())",
+			"captures": {
+				"1": {
+					"name": "variable.other.object.access.slang"
+				},
+				"2": {
+					"name": "punctuation.separator.dot-access.slang"
+				},
+				"3": {
+					"name": "punctuation.separator.namespace-access.slang"
+				},
+				"4": {
+					"patterns": [
+						{
+							"include": "#member_access"
+						},
+						{
+							"include": "#method_access"
+						},
+						{
+							"match": "((?:[a-zA-Z_]\\w*|(?<=\\]|\\)))\\s*)(?:(\\.)|(->))",
+							"captures": {
+								"1": {
+									"name": "variable.other.object.access.slang"
+								},
+								"2": {
+									"name": "punctuation.separator.dot-access.slang"
+								},
+								"3": {
+									"name": "punctuation.separator.namespace-access.slang"
+								}
+							}
+						}
+					]
+				},
+				"5": {
+					"name": "variable.other.member.slang"
+				}
+			}
+		},
+		"method_access": {
+			"contentName": "meta.function-call.member.slang",
+			"begin": "((?:[a-zA-Z_]\\w*|(?<=\\]|\\)))\\s*)(?:(\\.)|(->))((?:[a-zA-Z_]\\w*\\s*(?:(?:\\.)|(?:->))\\s*)*)\\s*([a-zA-Z_]\\w*)(\\()",
+			"beginCaptures": {
+				"1": {
+					"name": "variable.other.object.access.slang"
+				},
+				"2": {
+					"name": "punctuation.separator.dot-access.slang"
+				},
+				"3": {
+					"name": "punctuation.separator.namespace-access.slang"
+				},
+				"4": {
+					"patterns": [
+						{
+							"include": "#member_access"
+						},
+						{
+							"include": "#method_access"
+						},
+						{
+							"match": "((?:[a-zA-Z_]\\w*|(?<=\\]|\\)))\\s*)(?:(\\.)|(->))",
+							"captures": {
+								"1": {
+									"name": "variable.other.object.access.slang"
+								},
+								"2": {
+									"name": "punctuation.separator.dot-access.slang"
+								},
+								"3": {
+									"name": "punctuation.separator.namespace-access.slang"
+								}
+							}
+						}
+					]
+				},
+				"5": {
+					"name": "entity.name.function.member.slang"
+				},
+				"6": {
+					"name": "punctuation.section.arguments.begin.bracket.round.function.member.slang"
+				}
+			},
+			"end": "(\\))",
+			"endCaptures": {
+				"1": {
+					"name": "punctuation.section.arguments.end.bracket.round.function.member.slang"
+				}
+			},
+			"patterns": [
+				{
+					"include": "#function-call-innards"
+				}
+			]
+		},
+		"block": {
+			"patterns": [
+				{
+					"begin": "{",
+					"beginCaptures": {
+						"0": {
+							"name": "punctuation.section.block.begin.bracket.curly.slang"
+						}
+					},
+					"end": "}|(?=\\s*#\\s*(?:else\\s+(if)*)\\b)",
+					"endCaptures": {
+						"0": {
+							"name": "punctuation.section.block.end.bracket.curly.slang"
+						}
+					},
+					"name": "meta.block.slang",
+					"patterns": [
+						{
+							"include": "#block_innards"
+						}
+					]
+				}
+			]
+		},
+		"block_innards": {
+			"patterns": [
+				{
+					"include": "#method_access"
+				},
+				{
+					"include": "#member_access"
+				},
+				{
+					"include": "#function_call"
+				},
+				{
+					"name": "meta.initialization.slang",
+					"begin": "(?x)\n(?!(?:while|for|do|if|else|switch|catch|enumerate|return|typeid|alignof|alignas|sizeof|[cr]?iterate|and|and_eq|bitand|bitor|compl|not|not_eq|or|or_eq|typeid|xor|xor_eq|alignof|alignas)\\s*\\()\n(\n(?:[A-Za-z_][A-Za-z0-9_]*+|::)++  # actual name\n|\n(?:(?<=operator)(?:[-*&<>=+!]+|\\(\\)|\\[\\]))\n)\n\\s*(\\()",
+					"beginCaptures": {
+						"1": {
+							"name": "variable.other.slang"
+						},
+						"2": {
+							"name": "punctuation.section.parens.begin.bracket.round.initialization.slang"
+						}
+					},
+					"end": "\\)",
+					"endCaptures": {
+						"0": {
+							"name": "punctuation.section.parens.end.bracket.round.initialization.slang"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#function-call-innards"
+						}
+					]
+				},
+				{
+					"begin": "{",
+					"beginCaptures": {
+						"0": {
+							"name": "punctuation.section.block.begin.bracket.curly.slang"
+						}
+					},
+					"end": "}|(?=\\s*#\\s*(?:else\\s+(if)*)\\b)",
+					"endCaptures": {
+						"0": {
+							"name": "punctuation.section.block.end.bracket.curly.slang"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#block_innards"
+						}
+					]
+				},
+				{
+					"include": "#parens-block"
+				},
+				{
+					"include": "$self"
+				}
+			]
+		},
+		"function_call": {
+			"begin": "(?x)(?!(?:while|for|do|if|else|switch|catch|return|sizeof|and|not|or|xor)\\s*\\()(?=(?:[A-Za-z_][A-Za-z0-9_]*+)++\\s*\\(|(?:[-*&<>=+!]+|\\(\\)|\\[\\])\\s*\\()",
+			"end": "\\)",
+			"name": "meta.function-call.slang",
+			"patterns": [
+				{
+					"include": "#function-call-innards"
+				}
+			]
+		},
+		"function-call-innards": {
+			"patterns": [
+				{
+					"include": "#comments"
+				},
+				{
+					"include": "#storage_types"
+				},
+				{
+					"include": "#method_access"
+				},
+				{
+					"include": "#member_access"
+				},
+				{
+					"include": "#operators"
+				},
+				{
+					"begin": "(?x)(?!(?:while|for|do|if|else|switch|catch|return|sizeof|and|not|or|xor)\\s*\\()((?:[A-Za-z_][A-Za-z0-9_]*+)++|(?:[-*&<>=+!]+|\\(\\)|\\[\\]))\\s*(\\()",
+					"beginCaptures": {
+						"1": {
+							"name": "entity.name.function.slang"
+						},
+						"2": {
+							"name": "punctuation.section.arguments.begin.bracket.round.slang"
+						}
+					},
+					"end": "\\)",
+					"endCaptures": {
+						"0": {
+							"name": "punctuation.section.arguments.end.bracket.round.slang"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#function-call-innards"
+						}
+					]
+				},
+				{
+					"begin": "\\(",
+					"beginCaptures": {
+						"0": {
+							"name": "punctuation.section.parens.begin.bracket.round.slang"
+						}
+					},
+					"end": "\\)",
+					"endCaptures": {
+						"0": {
+							"name": "punctuation.section.parens.end.bracket.round.slang"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#function-call-innards"
+						}
+					]
+				},
+				{
+					"include": "#block_innards"
+				}
+			]
+		},
+		"parens-block": {
+			"name": "meta.parens.block.slang",
+			"begin": "\\(",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.section.parens.begin.bracket.round.slang"
+				}
+			},
+			"end": "\\)",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.section.parens.end.bracket.round.slang"
+				}
+			},
+			"patterns": [
+				{
+					"include": "#block_innards"
+				},
+				{
+					"match": "(?-mix:(?<!:):(?!:))",
+					"name": "punctuation.range-based.slang"
+				}
+			]
+		},
 		"storage_types": {
 			"name": "storage.type.slang",
-			"match": "\\b(Char|UChar|Short|Ushort|UShort|Integer|UInteger|Long|ULong|LLong|ULLong|Float|Double|Complex|String|BString|Struct|Ref|Null|Array|Assoc|List|DataType)_Type\\b"
+			"match": "\\b(?:(Char|UChar|Short|Ushort|UShort|Integer|UInteger|Long|ULong|LLong|ULLong|Float|Double|Complex|String|BString|Struct|Ref|Null|Array|Assoc|List|DataType)_Type|EXIT_BLOCK|ERROR_BLOCK|USER_BLOCK[0-4])\\b"
+		},
+		"operators2": {
+			"patterns": [
+				{
+					"match": "(?<![\\w$])(sizeof)(?![\\w$])",
+					"name": "keyword.operator.sizeof.slang"
+				},
+				{
+					"match": "\\+=|-=|\\*=|/=|&=|\\|=",
+					"name": "keyword.operator.assignment.compound.slang"
+				},
+				{
+					"match": "&|\\||~|shr|sht|xor",
+					"name": "keyword.operator.bitwise.shift.slang"
+				},
+				{
+					"match": "!=|<=|>=|==|<|>",
+					"name": "keyword.operator.comparison.slang"
+				},
+				{
+					"match": "&&|\\|\\||and|or|not",
+					"name": "keyword.operator.logical.slang"
+				},
+				{
+					"match": "=",
+					"name": "keyword.operator.assignment.slang"
+				},
+				{
+					"match": "%|\\*|/|-|\\+|--|\\+\\+|\\^|mod",
+					"name": "keyword.operator.slang"
+				},
+				{
+					"begin": "(\\?)",
+					"beginCaptures": {
+						"1": {
+							"name": "keyword.operator.ternary.slang"
+						}
+					},
+					"end": "(:)",
+					"endCaptures": {
+						"1": {
+							"name": "keyword.operator.ternary.slang"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#function-call-innards"
+						},
+						{
+							"include": "$self"
+						}
+					]
+				}
+			]
 		},
 		"keywords": {
 			"patterns": [
@@ -88,13 +423,13 @@
 					"match": "\\b(variable|struct)\\b"
 				},
 				{
-					"match": "\\b(?:(NULL)|(PI)|(ssss))\\b",
+					"match": "\\b(?:(NULL)|(PI|E))\\b",
 					"captures": {
 						"1": {
 							"name": "support.constant.slan"
 						},
 						"2": {
-							"name": "constant.numeric.slang"
+							"name": "constant.numeric.isis.slang"
 						}
 					}
 				},
@@ -116,6 +451,14 @@
 				}
 			}
 		},
+		"delimiters": {
+			"patterns": [
+				{
+					"match": "\\,|:",
+					"name": "punctuation.other.slang"
+				}
+			]
+		},
 		"strings": {
 			"name": "string.quoted.double.slang",
 			"begin": "\"",
@@ -127,7 +470,7 @@
 				},
 				{
 					"name": "invalid.illegal.unknown-escape.slang",
-					"match": "\\\\."
+					"match": "(?!.*) #not match anything, keep to use later.  \\\\."
 				}
 			]
 		},
@@ -147,17 +490,12 @@
 			]
 		},
 		"line_comment": {
-			"patterns": [
-				{
-					"name": "comment.line.percentage.slang",
-					"match": "(%).*$\\n?",
-					"captures": {
-						"1": {
-							"name": "punctuation.definition.comment.slang"
-						}
-					}
+			"match": "(%).*\\n?",
+			"captures": {
+				"0": {
+					"name": "comment.line.percentage.slang"
 				}
-			]
+			}
 		},
 		"block_comment": {
 			"begin": "\\s*+(#<([^\\s<>]+)>)",
