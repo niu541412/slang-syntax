@@ -6,29 +6,43 @@
   "engines": {
     "vscode": "^1.30.0"
   },
-	"publisher": "niu541412",
-	"license": "MIT",
+  "publisher": "niu541412",
+  "license": "MIT",
   "categories": [
     "Programming Languages"
   ],
   "contributes": {
-    "languages": [{
-      "id": "slang",
-      "aliases": ["S-Lang", "slang"],
-      "extensions": [".sl", ".slshrc", ".isisrc"],
-      "configuration": "./language-configuration.json",
-      "firstLine": "^#!/.*\\b[(slsh)(isis)]*\\b"
-    }],
-    "grammars": [{
-      "language": "slang",
-      "scopeName": "source.slang",
-      "path": "./syntaxes/slang.tmLanguage.json"
-    }]
+    "languages": [
+      {
+        "id": "slang",
+        "aliases": [
+          "S-Lang",
+          "slang"
+        ],
+        "extensions": [
+          ".sl",
+          ".slshrc",
+          ".isisrc"
+        ],
+        "configuration": "./language-configuration.json",
+        "firstLine": "^#!/.*\\b[(slsh)(isis)]*\\b"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "slang",
+        "scopeName": "source.slang",
+        "path": "./syntaxes/slang.tmLanguage.json"
+      }
+    ]
   },
   "icon": "images/slang_logo.png",
   "galleryBanner.color": "#0F69C9",
   "repository": {
     "type": "git",
     "url": "https://github.com/niu541412/slang-syntax.git"
+  },
+  "dependencies": {
+    "vsce": "^2.15.0"
   }
 }
