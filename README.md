@@ -1,12 +1,18 @@
 # slang-syntax README
-Vscode extension for the syntax hightlight for [S-Lang](https://www.jedsoft.org/slang/) sripts.
+Vscode extension for the syntax hightlight for [S-Lang](https://www.jedsoft.org/slang/)(.sl) sripts.
 
-<img src="images/slang_logo.png" width=128 align="left" />
+<img  src="images/slang_logo.png" width=128 align="left" />
+<br />
+<br />
+<br />
+<br />
+<br />
+
 
 ## Features
 
 ### Syntax hightlight
-![screenshot](images/syntax.png){:height="50%" width="50%"}
+![screenshot](images/syntax.png)
 
 ## Requirements
 vscode (>1.30).
