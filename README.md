@@ -3,8 +3,14 @@
 A Visual Studio Code extension for the syntax hightlight for [S-Lang](https://www.jedsoft.org/slang/)(.sl) sripts.
 
 <img  src="images/slang_logo.png" width=128 align="left" />
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
----
 ## Installation
 Install this [extension](https://marketplace.visualstudio.com/items?itemName=niu541412.s-lang-syntax) from the VS Code marketplace.
 

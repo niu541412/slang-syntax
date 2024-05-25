@@ -2,7 +2,7 @@
   "name": "s-lang-syntax",
   "displayName": "S-Lang syntax",
   "description": "VScode Syntax Highlighting Bundle for S-Lang",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "engines": {
     "vscode": "^1.30.0"
   },
