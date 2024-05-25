@@ -41,8 +41,5 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/niu541412/slang-syntax.git"
-  },
-  "dependencies": {
-    "vsce": "^2.15.0"
   }
 }
