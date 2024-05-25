@@ -2,12 +2,8 @@
 Vscode extension for the syntax hightlight for [S-Lang](https://www.jedsoft.org/slang/)(.sl) sripts.
 
 <img  src="images/slang_logo.png" width=128 align="left" />
-<br />
-<br />
-<br />
-<br />
-<br />
 
+---
 
 ## Features
 
