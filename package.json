@@ -4,7 +4,7 @@
   "description": "VScode Syntax Highlighting Bundle for S-Lang",
   "version": "0.0.1",
   "engines": {
-    "vscode": "^1.60.0"
+    "vscode": "^1.30.0"
   },
 	"publisher": "niu541412",
 	"license": "MIT",

@@ -27,6 +27,15 @@
 			"include": "#import"
 		},
 		{
+			"include": "#method_access"
+		},
+		{
+			"include": "#member_access"
+		},
+		{
+			"include": "#function-call"
+		},
+		{
 			"include": "#delimiters"
 		},
 		{
@@ -153,7 +162,7 @@
 							"name": "punctuation.section.block.begin.bracket.curly.slang"
 						}
 					},
-					"end": "}|(?=\\s*#\\s*(?:else\\s+(if)*)\\b)",
+					"end": "}",
 					"endCaptures": {
 						"0": {
 							"name": "punctuation.section.block.end.bracket.curly.slang"
@@ -177,11 +186,11 @@
 					"include": "#member_access"
 				},
 				{
-					"include": "#function_call"
+					"include": "#function-call"
 				},
 				{
 					"name": "meta.initialization.slang",
-					"begin": "(?x)\n(?!(?:while|for|do|if|else|switch|catch|enumerate|return|typeid|alignof|alignas|sizeof|[cr]?iterate|and|and_eq|bitand|bitor|compl|not|not_eq|or|or_eq|typeid|xor|xor_eq|alignof|alignas)\\s*\\()\n(\n(?:[A-Za-z_][A-Za-z0-9_]*+|::)++  # actual name\n|\n(?:(?<=operator)(?:[-*&<>=+!]+|\\(\\)|\\[\\]))\n)\n\\s*(\\()",
+					"begin": "(?:(?:(?=\\s)(?<!else|new|return)(?<=\\w)\\s+(and|not|or|xor)))((?:[A-Za-z_][A-Za-z0-9_]*+)++)\\s*(\\()",
 					"beginCaptures": {
 						"1": {
 							"name": "variable.other.slang"
@@ -229,8 +238,8 @@
 				}
 			]
 		},
-		"function_call": {
-			"begin": "(?x)(?!(?:while|for|do|if|else|switch|catch|return|sizeof|and|not|or|xor)\\s*\\()(?=(?:[A-Za-z_][A-Za-z0-9_]*+)++\\s*\\(|(?:[-*&<>=+!]+|\\(\\)|\\[\\])\\s*\\()",
+		"function-call": {
+			"begin": "(?!(?:while|_for|for|foreach|using|loop|then|forever|do|if|ifnot|else|continue|break|switch|case|try|catch|throw|finally|return|sizeof|and|not|or|xor|import|autoload|require|eval_file)\\s*\\()(?=(?:[A-Za-z_][A-Za-z0-9_]*+)++\\s*\\(|(?:[-*&<>=+!]+|\\(\\)|\\[\\])\\s*\\()",
 			"end": "\\)",
 			"name": "meta.function-call.slang",
 			"patterns": [
@@ -242,7 +251,7 @@
 		"function-call-innards": {
 			"patterns": [
 				{
-					"include": "#comments"
+					"include": "#comment"
 				},
 				{
 					"include": "#storage_types"
@@ -257,7 +266,7 @@
 					"include": "#operators"
 				},
 				{
-					"begin": "(?x)(?!(?:while|for|do|if|else|switch|catch|return|sizeof|and|not|or|xor)\\s*\\()((?:[A-Za-z_][A-Za-z0-9_]*+)++|(?:[-*&<>=+!]+|\\(\\)|\\[\\]))\\s*(\\()",
+					"begin": "(?!(?:while|_for|for|foreach|using|loop|then|forever|do|if|ifnot|else|continue|break|switch|case|try|catch|throw|finally|return|sizeof|and|not|or|xor|import|autoload|require|eval_file)\\s*\\()((?:[A-Za-z_][A-Za-z0-9_]*+)++|(?:[-*&<>=+!]+|\\(\\)|\\[\\]))\\s*(\\()",
 					"beginCaptures": {
 						"1": {
 							"name": "entity.name.function.slang"
@@ -328,9 +337,9 @@
 		},
 		"storage_types": {
 			"name": "storage.type.slang",
-			"match": "\\b(?:(Char|UChar|Short|Ushort|UShort|Integer|UInteger|Long|ULong|LLong|ULLong|Float|Double|Complex|String|BString|Struct|Ref|Null|Array|Assoc|List|DataType)_Type|EXIT_BLOCK|ERROR_BLOCK|USER_BLOCK[0-4])\\b"
+			"match": "\\b(?:(Char|UChar|Short|Ushort|UShort|Int|Integer|UInteger|Long|ULong|LLong|ULLong|Float|Double|Complex|String|BString|Struct|Ref|Null|Array|Assoc|List|DataType)_Type|EXIT_BLOCK|ERROR_BLOCK|USER_BLOCK[0-4])\\b"
 		},
-		"operators2": {
+		"operators": {
 			"patterns": [
 				{
 					"match": "(?<![\\w$])(sizeof)(?![\\w$])",
@@ -387,36 +396,11 @@
 		"keywords": {
 			"patterns": [
 				{
-					"name": "keyword.operator.sizeof.slang",
-					"match": "(?<![\\w$])(sizeof)(?![\\w$])"
+					"include": "#operators"
 				},
 				{
-					"name": "keyword.control.slang",
-					"match": "\\b(break|case|catch|continue|do|else|finally|_for|for|foreach|forever|if|ifnot|loop|return|switch|then|throw|try|using|while)\\b"
-				},
-				{
-					"name": "keyword.operator.slang",
-					"match": "%|\\*|/|-|\\+|--|\\+\\+|\\^|mod|@"
-				},
-				{
-					"name": "keyword.operator.bitwise.slang",
-					"match": "&|\\||~|shr|sht|xor"
-				},
-				{
-					"name": "keyword.operator.logical.slang",
-					"match": "&&|\\|\\||and|or|not"
-				},
-				{
-					"name": "keyword.operator.assignment.slang",
-					"match": "="
-				},
-				{
-					"name": "keyword.operator.comparison.slang",
-					"match": "!=|<=|>=|==|<|>"
-				},
-				{
-					"name": "keyword.operator.assignment.compound.slang",
-					"match": "\\+=|-=|\\*=|/=|&=|\\|="
+					"match": "\\b(while|_for|for|foreach|using|loop|then|forever|do|if|ifnot|else|continue|break|switch|case|try|catch|throw|finally|return)\\b",
+					"name": "keyword.control.c"
 				},
 				{
 					"name": "storage.type.slang",
@@ -426,7 +410,7 @@
 					"match": "\\b(?:(NULL)|(PI|E))\\b",
 					"captures": {
 						"1": {
-							"name": "support.constant.slan"
+							"name": "constant.language.slang"
 						},
 						"2": {
 							"name": "constant.numeric.isis.slang"
@@ -490,7 +474,7 @@
 			]
 		},
 		"line_comment": {
-			"match": "(%).*\\n?",
+			"match": "%.*(?:\\n|$)",
 			"captures": {
 				"0": {
 					"name": "comment.line.percentage.slang"
