@@ -1,15 +1,9 @@
 # slang-syntax README
 
-A Visual Studio Code extension for the syntax hightlight for [S-Lang](https://www.jedsoft.org/slang/)(.sl) sripts.
-
-<img  src="images/slang_logo.png" width=128 align="left" />
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
+A Visual Studio Code extension for the syntax hightlight for [S-Lang](https://www.jedsoft.org/slang/) (.sl) sripts.
+<p align="left">
+  <img  src="images/slang_logo.png" width=128" >
+</p>
 
 ## Installation
 Install this [extension](https://marketplace.visualstudio.com/items?itemName=niu541412.s-lang-syntax) from the VS Code marketplace.
@@ -37,9 +31,10 @@ Alternatively, the file with the `.sl` extension or has corresponding a shebang,
 
 ## Release Notes
 
-### 0.1.0
+### ~0.1.0
 
-Initial release.
+- Initial release.
+- Change id for fix the conflict with other language with similar extension.
 
 ## For more information
 
